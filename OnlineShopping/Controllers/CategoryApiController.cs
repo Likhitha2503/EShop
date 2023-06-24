@@ -26,7 +26,7 @@ namespace OnlineShopping.WebApi.Controllers
         }
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        [Authorize(Roles = "Admin")]
+        //[Authorize(Roles = "Admin")]
 
         public async Task<ActionResult<APIResponse>> GetCategories()
         {

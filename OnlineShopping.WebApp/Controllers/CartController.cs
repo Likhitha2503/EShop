@@ -35,6 +35,20 @@ namespace OnlineShopping.WebApp.Controllers
             }
             return View();
         }
+        //public async Task<CartDto> SendMail()
+        //{
+        //    var userId = HttpContext.Session.GetString(SD.SessionUserId);
+        //    APIResponse? response = await _cartService.GetAsync<APIResponse>(userId);
+        //    if (response != null & response.IsSuccess)
+        //    {
+        //        CartDto cartDto = JsonConvert.DeserializeObject<CartDto>(Convert.ToString(response.Result));
+        //        return cartDto;
+        //    }
+        //    return new CartDto();
+
+
+        //}
+
 
 
         private async Task<CartDto> LoadCartDtoBasedOnLoggedInUser()

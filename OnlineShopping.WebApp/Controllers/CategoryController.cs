@@ -19,7 +19,7 @@ namespace OnlineShopping.WebApp.Controllers
             _categoryService = categoryService;
             _mapper = mapper;
         }
-        [Authorize(Roles = "Admin")]
+        //[Authorize]
 
         public async Task<IActionResult> IndexCategory()
         {
