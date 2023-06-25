@@ -121,7 +121,7 @@
 
                     <hr />
                     <div class="col-6 col-md-3 offset-md-8">
-                        <span class="text-d" style="font-size:21px;"> Order Total : @string.Format("{0:c}", Model.CartHeader.CartTotal) <br /></span>
+                        <span class="text-d" style="font-size:21px;"> Order Total : @string.Format("$", Model.CartHeader.CartTotal) <br /></span>
 
 
                     </div>
@@ -132,10 +132,11 @@
 
                     <div class="col-6 col-md-3 offset-md-8">
 
-                        <button asp-action="SendMail" asp-route-cartDetailsId="@Model.CartDetails" asp-controller="Home" type="submit" class="btn btn-outline-success form-control">Email Cart</button>
+                        <button asp-action="SubmitCart" asp-controller="Cart" type="submit" class="btn btn-outline-success form-control">Submit Cart</button>
 
                     </div>
 
+                    @*sp-route-cartDetailsId="@Model.CartDetails"*@
                     @* <div class="col-6 col-md-3 offset-md-6">
 
                 <button disabled class="btn btn-success form-control " value="Checkout (Comming Soon!)" />

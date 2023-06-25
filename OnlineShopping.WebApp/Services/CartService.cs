@@ -50,7 +50,10 @@ namespace OnlineShopping.WebApp.Services
                 Url = cartUrl + "/api/cart/RemoveCart"
 
             });
-        }
+        } 
+        
+        
+      
 
     }
 }

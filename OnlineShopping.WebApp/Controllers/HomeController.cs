@@ -18,6 +18,8 @@ namespace OnlineShopping.WebApp.Controllers
         private readonly IProductService _productService;
         private readonly IMapper _mapper;
         private readonly ICategoryService _categoryService;
+        private readonly IUserManagerService _userManagerService;
+
         private readonly ICartService _cartService;
         public HomeController(IProductService productService, IMapper mapper, ICategoryService categoryService, ICartService cartService)
         {
@@ -28,19 +30,88 @@ namespace OnlineShopping.WebApp.Controllers
 
         }
 
-        public async Task<IActionResult> Index()
+        private List<SelectListItem> GetPageSizes(int selectedPageSize = 4)
+        {
+            var pagesSizes = new List<SelectListItem>();
+
+
+
+            if (selectedPageSize == 4)
+                pagesSizes.Add(new SelectListItem("4", "4", true));
+            else
+                pagesSizes.Add(new SelectListItem("4", "4"));
+
+
+
+            for (int lp = 8; lp <= 104; lp += 4)
+            {
+                if (lp == selectedPageSize)
+                { pagesSizes.Add(new SelectListItem(lp.ToString(), lp.ToString(), true)); }
+                else
+                    pagesSizes.Add(new SelectListItem(lp.ToString(), lp.ToString()));
+            }
+
+
+
+            return pagesSizes;
+        }
+        public async Task<IActionResult> Index(string SearchText = "", int pg = 1, int pageSize = 4)
         {
             List<ProductDto> list = new();
-
             var response = await _productService.GetAllAsync<APIResponse>(HttpContext.Session.GetString(SD.SessionToken));
             if (response != null && response.IsSuccess)
             {
                 list = JsonConvert.DeserializeObject<List<ProductDto>>(Convert.ToString(response.Result));
+                if (pg < 1) pg = 1;
+
+
+
+
+                if (SearchText != "" && SearchText != null)
+                {
+                    List<ProductDto> productList = new List<ProductDto>();
+                    foreach (var product in list)
+                    {
+                        if (product.Category.CategoryName.ToLower().Contains(SearchText.ToLower()) || product.ProductName.ToLower().Contains(SearchText.ToLower()))
+                            productList.Add(product);
+                    }
+                    list = productList;
+                }
+                int recsCount = list.Count();
+
+
+
+                int recSkip = (pg - 1) * pageSize;
+                var data = list.Skip(recSkip).Take(pageSize).ToList();
+
+
+
+                Pager SearchPager = new Pager(recsCount, pg, pageSize) { Action = "Index", Controller = "Home", SearchText = SearchText };
+                ViewBag.SearchPager = SearchPager;
+
+
+
+                this.ViewBag.PageSizes = GetPageSizes(pageSize);
+
+
+
+                return View(data.ToList());
             }
             return View(list);
         }
+        //public async Task<IActionResult> Index()
+        //{
+        //    List<ProductDto> list = new();
 
-    
+        //    var response = await _productService.GetAllAsync<APIResponse>(HttpContext.Session.GetString(SD.SessionToken));
+        //    if (response != null && response.IsSuccess)
+        //    {
+        //        list = JsonConvert.DeserializeObject<List<ProductDto>>(Convert.ToString(response.Result));
+        //    }
+        //    return View(list);
+        //}
+
+
 
 
         [Authorize]
@@ -91,6 +162,22 @@ namespace OnlineShopping.WebApp.Controllers
             }
 
             return View(productVM);
+        }
+
+        //[Authorize(Roles = "Admin")]
+        public async Task<IActionResult> Profile()
+        {
+            var list = new ProfileDto()
+            {
+                Name = HttpContext.Session.GetString(SD.SessionUserName),
+                UserName = HttpContext.Session.GetString(SD.SessionUserMail),
+                PhoneNumber = HttpContext.Session.GetString(SD.SessionUserPhoneNumber),
+                Role = HttpContext.Session.GetString(SD.SessionUserRole),
+                ImageUrl = HttpContext.Session.GetString(SD.SessionUserImage),
+            };
+            return View(list);
+
+
         }
     }
 }

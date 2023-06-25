@@ -1,4 +1,23 @@
 ﻿@model IEnumerable<OnlineShopping.WebApp.Models.Dto.UserManagerDto>
+@{
+	ViewData["Title"] = "IndexUsers";
+
+
+
+	Pager pager = new Pager();
+	int pageNo = 0;
+	if (ViewBag.SearchPager != null)
+	{
+		pager = ViewBag.SearchPager;
+		pageNo = pager.CurrentPage;
+	}
+}
+<div align:center>
+	<partial name="_pager" model="@pager" />
+
+
+</div>
+
 <br />
 <div class="container p-4 border">
 	<div class="row pb-2">
@@ -30,6 +49,9 @@
 				<th>
 					PhoneNumber
 				</th>
+				@*<th>
+					ImageUrl
+				</th>*@
 				<th></th>
 			</tr>
 		</thead>
@@ -42,6 +64,7 @@
 					<td>@item.Password</td>
 					<td>@item.Role</td>
 					<td>@item.PhoneNumber</td>
+					@*<td>@item.ImageUrl</td>*@
 					<td>
 						<a asp-controller="UserManager" asp-action="UpdateUser" asp-route-Id="@item.Id" class="btn btn-success"><i class="bi bi-pencil-square"></i></a>
 					</td>

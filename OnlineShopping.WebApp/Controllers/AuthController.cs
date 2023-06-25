@@ -40,8 +40,12 @@ namespace OnlineShopping.WebApp.Controllers
                 await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, principal);
                 HttpContext.Session.SetString(SD.SessionToken, model.Token);
                 HttpContext.Session.SetString(SD.SessionUserId, model.User.Id.ToString());
-                HttpContext.Session.SetString(SD.SessionUserMail, model.User.UserName.ToString());
-                HttpContext.Session.SetString(SD.SessionUserRole, model.User.Role.ToString());
+                HttpContext.Session.SetString(SD.SessionUserRole, model.User.Role);
+                HttpContext.Session.SetString(SD.SessionUserMail, model.User.UserName);
+                HttpContext.Session.SetString(SD.SessionUserName, model.User.Name);
+                HttpContext.Session.SetString(SD.SessionUserPhoneNumber, model.User.PhoneNumber);
+                HttpContext.Session.SetString(SD.SessionUserImage, model.User.ImageUrl);
+
 
                 return RedirectToAction("Index", "Home");
             }

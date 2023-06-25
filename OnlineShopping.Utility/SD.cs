@@ -11,8 +11,12 @@
         }
         public static string SessionToken = "JWTToken";
         public static string SessionUserId = "0";
-        public static string SessionUserMail = "0";
         public static string SessionUserRole = "0";
+        public static string SessionUserMail = "E";
+        public static string SessionUserName = "N";
+        public static string SessionUserPhoneNumber = "P";
+        public static string SessionUserImage = "I";
+        
 
     }
 }

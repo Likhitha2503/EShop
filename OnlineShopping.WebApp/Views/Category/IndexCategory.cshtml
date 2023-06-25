@@ -1,4 +1,24 @@
 ﻿@model IEnumerable<OnlineShopping.WebApp.Models.CategoryDto>
+@{
+	ViewData["Title"] = "IndexCategory";
+
+
+
+	Pager pager = new Pager();
+	int pageNo = 0;
+	if (ViewBag.SearchPager != null)
+	{
+		pager = ViewBag.SearchPager;
+		pageNo = pager.CurrentPage;
+	}
+}
+<div align:center>
+	<partial name="_pager" model="@pager" />
+
+
+</div>
+
+
 <br />
 <div class="container p-4 border">
 	<div class="row pb-2">
