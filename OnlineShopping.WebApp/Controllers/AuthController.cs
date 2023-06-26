@@ -72,7 +72,12 @@ namespace OnlineShopping.WebApp.Controllers
             {
                 return RedirectToAction("Login");
             }
-            return View();
+            else
+            {
+                ModelState.AddModelError("CustomError", result.ErrorMessages.FirstOrDefault());
+                return View(obj);
+            }
+
         }
 
 

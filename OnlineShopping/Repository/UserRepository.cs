@@ -72,7 +72,8 @@ namespace OnlineShopping.WebApi.Repository
                 Password = registerationRequestDTO.Password,
                 Name = registerationRequestDTO.Name,
                 Role = registerationRequestDTO.Role,
-                PhoneNumber=registerationRequestDTO.PhoneNumber
+                PhoneNumber=registerationRequestDTO.PhoneNumber,
+                ImageUrl=registerationRequestDTO.ImageUrl
             };
 
             _db.LocalUsers.Add(user);

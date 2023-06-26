@@ -101,6 +101,7 @@ namespace OnlineShopping.WebApp.Controllers
             var response = await _categoryService.GetAllAsync<APIResponse>(HttpContext.Session.GetString(SD.SessionToken)) ;
             if (response != null && response.IsSuccess)
             {
+                   
                     productVM.CategoryList = JsonConvert.DeserializeObject<List<CategoryDto>>
                     (Convert.ToString(response.Result)).Select(i => new SelectListItem
                     {
@@ -116,10 +117,23 @@ namespace OnlineShopping.WebApp.Controllers
         public async Task<IActionResult> CreateProduct(ProductCreateVM model)
         {
 
+            if (model.Product.Price <= 0 )
+            {
+                TempData["error"] = "Price should be greater than zero.";
+                return RedirectToAction(nameof(CreateProduct));
+
+            }
+            if (model.Product.AvailableQuantity < 0)
+            {
+                TempData["error"] = "AvailableQuantity should not be negative.";
+                return RedirectToAction(nameof(CreateProduct));
+
+            }
 
             var response = await _productService.CreateAsync<APIResponse>(model.Product, HttpContext.Session.GetString(SD.SessionToken));
             if (response != null && response.IsSuccess)
             {
+                
                 TempData["success"] = "Product created successfully";
                 return RedirectToAction(nameof(IndexProduct));
             }
@@ -146,6 +160,7 @@ namespace OnlineShopping.WebApp.Controllers
         [Authorize(Roles = "Admin")]
         public async Task<IActionResult> UpdateProduct(int productId)
         {
+            
             ProductUpdateVM productVM = new();
             var response = await _productService.GetAsync<APIResponse>(productId, HttpContext.Session.GetString(SD.SessionToken));
             if (response != null && response.IsSuccess)
@@ -171,6 +186,18 @@ namespace OnlineShopping.WebApp.Controllers
         [Authorize(Roles = "Admin")]
         public async Task<IActionResult> UpdateProduct(ProductUpdateVM model)
         {
+            if (model.Product.Price <= 0)
+            {
+                TempData["error"] = "Price should be greater than zero.";
+                return RedirectToAction(nameof(CreateProduct));
+
+            }
+            if (model.Product.AvailableQuantity < 0)
+            {
+                TempData["error"] = "AvailableQuantity should not be negative.";
+                return RedirectToAction(nameof(CreateProduct));
+
+            }
             if (ModelState.IsValid)
             {
                 var response = await _productService.UpdateAsync<APIResponse>(model.Product,HttpContext.Session.GetString(SD.SessionToken));
@@ -230,6 +257,7 @@ namespace OnlineShopping.WebApp.Controllers
         [Authorize(Roles = "Admin")]
         public async Task<IActionResult> DeleteProduct(ProductDeleteVM model)
         {
+            
             var response = await _productService.DeleteAsync<APIResponse>(model.Product.ProductId, HttpContext.Session.GetString(SD.SessionToken));
             if (response != null && response.IsSuccess)
             {

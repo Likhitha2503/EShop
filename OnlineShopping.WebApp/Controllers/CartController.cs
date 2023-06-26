@@ -25,8 +25,23 @@ namespace OnlineShopping.WebApp.Controllers
         {
             return View(await LoadCartDtoBasedOnLoggedInUser());
         }
-       
-        
+
+        private async Task<CartDto> LoadCartDtoBasedOnLoggedInUser()
+        {
+
+            var userId = HttpContext.Session.GetString(SD.SessionUserId);
+            APIResponse? response = await _cartService.GetAsync<APIResponse>(userId);
+            if (response != null & response.IsSuccess)
+            {
+                CartDto cartDto = JsonConvert.DeserializeObject<CartDto>(Convert.ToString(response.Result));
+                return cartDto;
+            }
+            return new CartDto();
+
+        }
+
+
+
         public async Task<IActionResult> Remove(int cartDetailsId)
         {
             var userId = HttpContext.Session.GetString(SD.SessionUserId);
@@ -46,19 +61,7 @@ namespace OnlineShopping.WebApp.Controllers
 
 
 
-        private async Task<CartDto> LoadCartDtoBasedOnLoggedInUser()
-        {
-
-            var userId = HttpContext.Session.GetString(SD.SessionUserId);
-            APIResponse? response = await _cartService.GetAsync<APIResponse>(userId);
-            if (response != null & response.IsSuccess)
-            {
-                CartDto cartDto = JsonConvert.DeserializeObject<CartDto>(Convert.ToString(response.Result));
-                return cartDto;
-            }
-            return new CartDto();
-
-        }
+      
 
 
 

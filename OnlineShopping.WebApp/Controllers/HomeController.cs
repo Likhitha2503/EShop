@@ -114,7 +114,7 @@ namespace OnlineShopping.WebApp.Controllers
 
 
 
-        [Authorize]
+        //[Authorize]
         public async Task<IActionResult> ProductDetails(int productId)
         {
             ProductdetailsVM productVM = new();

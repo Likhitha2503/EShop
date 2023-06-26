@@ -139,8 +139,6 @@ namespace OnlineShopping.WebApi.Controllers
             }
             catch (Exception ex)
             {
-                //_response.Message = ex.Message.ToString();
-                //_response.IsSuccess = false;
 
                 _response.IsSuccess = false;
                 _response.ErrorMessages = new List<string>() { ex.ToString() };

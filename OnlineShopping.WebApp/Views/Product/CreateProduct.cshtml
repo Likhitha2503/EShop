@@ -1,16 +1,14 @@
 ﻿@model OnlineShopping.WebApp.Models.VM.ProductCreateVM
 <form asp-action="CreateProduct">
     <br />
+
     <div class="container border p-3">
         <h4 class="text-primary">Create Product</h4>
         <hr />
-
-
-
         <div class="row">
             <div asp-validation-summary="All" class="text-danger"></div>
 
-
+           
 
             <div class="col-2">
                 <label asp-for="Product.CategoryId" class="control-label pt-2" style="font-size:20px;"></label>
