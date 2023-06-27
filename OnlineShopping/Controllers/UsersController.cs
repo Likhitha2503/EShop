@@ -27,7 +27,7 @@ namespace OnlineShopping.WebApi.Controllers
             {
                 _response.StatusCode = HttpStatusCode.BadRequest;
                 _response.IsSuccess = false;
-                _response.ErrorMessages.Add("UserName or password is incorrect");
+                _response.ErrorMessages.Add("Email or password is incorrect");
                 return BadRequest(_response);
             }
             _response.StatusCode = HttpStatusCode.OK;
@@ -39,12 +39,12 @@ namespace OnlineShopping.WebApi.Controllers
         [HttpPost("register")]
         public async Task<IActionResult> Register([FromBody] RegisterationRequestDTO model)
         {
-            bool ifUserNameUnique = _userRepo.IsUniqueUser(model.UserName);
-            if (!ifUserNameUnique)
+            bool ifEmailUnique = _userRepo.IsUniqueUser(model.Email);
+            if (!ifEmailUnique)
             {
                 _response.StatusCode = HttpStatusCode.BadRequest;
                 _response.IsSuccess = false;
-                _response.ErrorMessages.Add("UserName already exists");
+                _response.ErrorMessages.Add("Email already exists");
                 return BadRequest(_response);
             }
 

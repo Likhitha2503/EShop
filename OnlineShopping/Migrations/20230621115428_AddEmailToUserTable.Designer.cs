@@ -11,8 +11,8 @@ using OnlineShopping.WebApi.Data;
 namespace OnlineShopping.WebApi.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20230621115428_AddUserNameToUserTable")]
-    partial class AddUserNameToUserTable
+    [Migration("20230621115428_AddEmailToUserTable")]
+    partial class AddEmailToUserTable
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -76,7 +76,7 @@ namespace OnlineShopping.WebApi.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<string>("UserName")
+                    b.Property<string>("Email")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 

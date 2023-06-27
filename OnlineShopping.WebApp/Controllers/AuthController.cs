@@ -34,15 +34,15 @@ namespace OnlineShopping.WebApp.Controllers
             {
                 LoginResponseDTO model = JsonConvert.DeserializeObject<LoginResponseDTO>(Convert.ToString(response.Result));
                 var identity = new ClaimsIdentity(CookieAuthenticationDefaults.AuthenticationScheme);
-                identity.AddClaim(new Claim(ClaimTypes.Name, model.User.UserName));
+                identity.AddClaim(new Claim(ClaimTypes.Name, model.User.Email));
                 identity.AddClaim(new Claim(ClaimTypes.Role, model.User.Role));
                 var principal = new ClaimsPrincipal(identity);
                 await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, principal);
                 HttpContext.Session.SetString(SD.SessionToken, model.Token);
                 HttpContext.Session.SetString(SD.SessionUserId, model.User.Id.ToString());
                 HttpContext.Session.SetString(SD.SessionUserRole, model.User.Role);
-                HttpContext.Session.SetString(SD.SessionUserMail, model.User.UserName);
-                HttpContext.Session.SetString(SD.SessionUserName, model.User.Name);
+                HttpContext.Session.SetString(SD.SessionUserMail, model.User.Email);
+                HttpContext.Session.SetString(SD.SessionEmail, model.User.Name);
                 HttpContext.Session.SetString(SD.SessionUserPhoneNumber, model.User.PhoneNumber);
                 HttpContext.Session.SetString(SD.SessionUserImage, model.User.ImageUrl);
 

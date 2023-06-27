@@ -91,6 +91,7 @@ namespace OnlineShopping.WebApi.Controllers
                         await _db.SaveChangesAsync();
                     }
                     else
+
                     {
                         //update count in cart details
                         cartDto.CartDetails.First().Count += cartDetailsFromDb.Count;

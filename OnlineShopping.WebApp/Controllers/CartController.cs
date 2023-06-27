@@ -72,7 +72,7 @@ namespace OnlineShopping.WebApp.Controllers
 
             var emailId = HttpContext.Session.GetString(SD.SessionUserMail);
             var userId = HttpContext.Session.GetString(SD.SessionUserId);
-            var name = HttpContext.Session.GetString(SD.SessionUserName);
+            var name = HttpContext.Session.GetString(SD.SessionEmail);
 
             APIResponse? response = await _cartService.GetAsync<APIResponse>(userId);
 

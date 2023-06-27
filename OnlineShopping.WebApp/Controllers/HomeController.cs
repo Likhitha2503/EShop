@@ -99,17 +99,7 @@ namespace OnlineShopping.WebApp.Controllers
             }
             return View(list);
         }
-        //public async Task<IActionResult> Index()
-        //{
-        //    List<ProductDto> list = new();
-
-        //    var response = await _productService.GetAllAsync<APIResponse>(HttpContext.Session.GetString(SD.SessionToken));
-        //    if (response != null && response.IsSuccess)
-        //    {
-        //        list = JsonConvert.DeserializeObject<List<ProductDto>>(Convert.ToString(response.Result));
-        //    }
-        //    return View(list);
-        //}
+       
 
 
 
@@ -146,22 +136,34 @@ namespace OnlineShopping.WebApp.Controllers
                 ProductId = productVM.Product.ProductId,
             };
 
-            List<CartDetailsDto> cartDetailsDtos = new() { cartDetails };
-            cartDto.CartDetails = cartDetailsDtos;
-
-            APIResponse? response = await _cartService.CreateAsync<APIResponse>(cartDto);
-
-            if (response != null && response.IsSuccess)
-            {
-                TempData["success"] = "Item has been added to the Shopping Cart";
-                return RedirectToAction(nameof(Index));
-            }
-            else
+           if(cartDetails.Count <= 0)
             {
                 TempData["error"] = "Error encountered.";
+                return RedirectToAction("Index");
+
             }
 
+
+
+            List<CartDetailsDto> cartDetailsDtos = new() { cartDetails };
+                cartDto.CartDetails = cartDetailsDtos;
+
+                APIResponse? response = await _cartService.CreateAsync<APIResponse>(cartDto);
+
+                if (response != null && response.IsSuccess)
+                {
+                    TempData["success"] = "Item has been added to the Shopping Cart";
+                    return RedirectToAction(nameof(Index));
+                }
+                else
+                {
+                   TempData["error"] = "Error encountered.";
+
+                }
+
+
             return View(productVM);
+
         }
 
         //[Authorize(Roles = "Admin")]
@@ -169,8 +171,8 @@ namespace OnlineShopping.WebApp.Controllers
         {
             var list = new ProfileDto()
             {
-                Name = HttpContext.Session.GetString(SD.SessionUserName),
-                UserName = HttpContext.Session.GetString(SD.SessionUserMail),
+                Name = HttpContext.Session.GetString(SD.SessionEmail),
+                Email = HttpContext.Session.GetString(SD.SessionUserMail),
                 PhoneNumber = HttpContext.Session.GetString(SD.SessionUserPhoneNumber),
                 Role = HttpContext.Session.GetString(SD.SessionUserRole),
                 ImageUrl = HttpContext.Session.GetString(SD.SessionUserImage),

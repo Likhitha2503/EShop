@@ -68,7 +68,7 @@ namespace OnlineShopping.WebApp.Controllers
 					List<UserManagerDto> userList = new List<UserManagerDto>();
 					foreach (var user in list)
 					{
-                        if (user.Name.ToLower().Contains(SearchText.ToLower()) || user.UserName.ToLower().Contains(SearchText.ToLower())|| user.Role.ToLower().Contains(SearchText.ToLower()))
+                        if (user.Name.ToLower().Contains(SearchText.ToLower()) || user.Email.ToLower().Contains(SearchText.ToLower())|| user.Role.ToLower().Contains(SearchText.ToLower()))
 							userList.Add(user);
 					}
 					list = userList;

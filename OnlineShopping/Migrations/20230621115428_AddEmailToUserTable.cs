@@ -5,7 +5,7 @@
 namespace OnlineShopping.WebApi.Migrations
 {
     /// <inheritdoc />
-    public partial class AddUserNameToUserTable : Migration
+    public partial class AddEmailToUserTable : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)

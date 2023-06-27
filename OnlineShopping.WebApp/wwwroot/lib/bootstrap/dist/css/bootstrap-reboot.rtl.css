@@ -380,7 +380,7 @@ legend + * {
 
 [type="tel"],
 [type="url"],
-[type="UserName"],
+[type="Email"],
 [type="number"] {
   direction: ltr;
 }
